@@ -1,3 +1,5 @@
+const summaryData = require('./data/boardgame-summaries.json')
+
 let response
 
 exports.summaryHandler = async (event, context) => {
@@ -6,7 +8,7 @@ exports.summaryHandler = async (event, context) => {
     response = {
       statusCode: 200,
       body: JSON.stringify({
-        message: 'here are some board games'
+        summaryData
         // location: ret.data.trim()
       })
     }

@@ -15,8 +15,9 @@ describe('Tests index', function () {
 
     const response = JSON.parse(result.body)
 
-    expect(response).to.be.an('object')
-    expect(response.message).to.be.equal('here are some board games')
+    expect(response.summaryData).to.be.an('object')
+    expect(response.summaryData.byMonth).to.be.an('array')
+    expect(response.summaryData.byMonth.length).to.be.greaterThan(12)
     // expect(response.location).to.be.an("string");
   })
 })
