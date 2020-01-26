@@ -2,10 +2,10 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "sam-app"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-ycsn2k7gp7cv"
-s3_prefix = "sam-app"
-region = "us-east-1"
+stack_name = "boardgame-summary-api"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-z2zew3n5c75o"
+s3_prefix = "boardgame-summary-api"
+region = "eu-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 
