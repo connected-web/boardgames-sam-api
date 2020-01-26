@@ -23,6 +23,18 @@ Resources:
           Properties:
             Path: /summary
             Method: get
+  SummaryByYearFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: boardgame-summary/
+      Handler: app.summaryByYearHandler
+      Runtime: nodejs12.x
+      Events:
+        Summary:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /summary/{year}
+            Method: get
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
