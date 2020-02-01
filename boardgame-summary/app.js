@@ -40,3 +40,31 @@ exports.summaryByYearHandler = async (event, context) => {
 
   return response
 }
+
+exports.playDataHandler = async (event, context) => {
+  let payload
+  let action = {
+    type: 'storePlayData',
+    date: new Date()
+  }
+  if (event.body) {
+    payload = JSON.parse(event.body)
+    
+  }
+
+  try {
+    // const ret = await axios(url);
+    response = {
+      statusCode: 200,
+      body: JSON.stringify({
+        action, payload
+        // location: ret.data.trim()
+      })
+    }
+  } catch (err) {
+    console.log(err)
+    return err
+  }
+
+  return response
+}
