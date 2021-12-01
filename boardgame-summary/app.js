@@ -45,20 +45,24 @@ exports.summaryByYearHandler = async (event, context) => {
 }
 
 exports.playDataHandler = async (event, context) => {
-  let payload
-  const action = {
-    type: 'storePlayData',
-    date: new Date()
-  }
-  if (event.body) {
-    payload = JSON.parse(event.body)
+  let action, payload
+  try {
+    action = {
+      type: 'storePlayData',
+      date: new Date()
+    }
+    if (event.body) {
+      payload = JSON.parse(event.body)
+    }
+  } catch (ex) {
+    console.error('Play data handler: unable to parse payload', ex.message)
   }
 
   // Set the parameters
   const params = {
     Bucket: 'boardgames-tracking', // The name of the bucket. For example, 'sample_bucket_101'.
     Key: '2021-11-30-test.json', // The name of the object. For example, 'sample_upload.txt'.
-    Body: JSON.stringify(payload, null, 2) // The content of the object. For example, 'Hello world!".
+    Body: JSON.stringify(payload || event, null, 2) // The content of the object. For example, 'Hello world!".
   }
 
   try {
@@ -71,7 +75,7 @@ exports.playDataHandler = async (event, context) => {
         '/' +
         params.Key
     )
-    return results // For unit tests.
+   
   } catch (err) {
     console.log('Error', err)
   }
