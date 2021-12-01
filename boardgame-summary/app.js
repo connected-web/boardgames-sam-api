@@ -59,9 +59,13 @@ exports.playDataHandler = async (event, context) => {
   }
 
   // Set the parameters
+  // 2021-12-01T23:15:12.json
+  // 2021-12-01T23:11:25.556Z.json
+  const currentDate = new Date()
+  const filename = `${currentDate.toISOString()}.json`
   const params = {
     Bucket: 'boardgames-tracking', // The name of the bucket. For example, 'sample_bucket_101'.
-    Key: '2021-11-30-test.json', // The name of the object. For example, 'sample_upload.txt'.
+    Key: filename, // The name of the object. For example, 'sample_upload.txt'.
     Body: JSON.stringify(payload || event, null, 2) // The content of the object. For example, 'Hello world!".
   }
 
