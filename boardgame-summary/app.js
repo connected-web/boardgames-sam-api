@@ -70,7 +70,7 @@ exports.playDataHandler = async (event, context) => {
   }
 
   try {
-    const results = await s3Client.send(new PutObjectCommand(params))
+    await s3Client.send(new PutObjectCommand(params))
     console.log(
       'Successfully created ' +
         params.Key +
@@ -79,7 +79,6 @@ exports.playDataHandler = async (event, context) => {
         '/' +
         params.Key
     )
-   
   } catch (err) {
     console.log('Error', err)
   }
@@ -88,6 +87,10 @@ exports.playDataHandler = async (event, context) => {
     // const ret = await axios(url);
     response = {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true
+      },
       body: JSON.stringify({
         action, payload
         // location: ret.data.trim()
