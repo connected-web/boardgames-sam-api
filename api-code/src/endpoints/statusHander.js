@@ -14,4 +14,8 @@ async function handler (event, context) {
   })
 }
 
+handler.routeName = 'Status'
+handler.routePath = '/status'
+handler.routeMethod = 'GET'
+
 module.exports = handler
