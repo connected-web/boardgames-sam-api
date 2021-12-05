@@ -1,105 +1,106 @@
 const { PutObjectCommand } = require('@aws-sdk/client-s3')
 const { s3Client } = require('./src/s3Client.js')
+const corsHeaders = require('./src/helpers/corsHeaders')
+const packageJson = require('./package.json')
 
-const summaryData = require('./data/boardgame-summaries.json')
-
-let response
-
-exports.summaryHandler = async (event, context) => {
-  try {
-    // const ret = await axios(url);
-    response = {
-      statusCode: 200,
-      body: JSON.stringify({
-        summaryData
-        // location: ret.data.trim()
-      })
-    }
-  } catch (err) {
-    console.log(err)
-    return err
-  }
-
-  return response
+const HTTP_CODES = {
+  success: 200,
+  clientError: 400
 }
 
-exports.summaryByYearHandler = async (event, context) => {
-  const { year } = event.pathParameters
-  const selectedYear = summaryData.byYear.filter(item => item.dateCode === year)[0]
-  try {
-    // const ret = await axios(url);
-    response = {
-      statusCode: 200,
-      body: JSON.stringify({
-        data: selectedYear,
-        currentYear: year
-        // location: ret.data.trim()
-      })
-    }
-  } catch (err) {
-    console.log(err)
-    return err
-  }
+function createPutObject (params) {
+  return new PutObjectCommand(params)
+}
 
-  return response
+const interfaces = {
+  console,
+  createPutObject,
+  s3Client,
+  now: () => new Date()
+}
+const originalInterfaces = Object.assign({}, interfaces)
+
+exports.modifyInterfaces = function (overrides) {
+  Object.assign(interfaces, overrides)
+  return originalInterfaces
+}
+
+exports.resetInterfaces = function () {
+  Object.assign(interfaces, originalInterfaces)
+}
+
+exports.statusHandler = async (event, context) => {
+  const { console, now } = interfaces
+  const { name, version, description } = packageJson
+  console.log('Status endpoint', now(), event)
+  return successResponse({
+    name,
+    version,
+    description,
+    currentDate: now().toISOString()
+  })
+}
+
+function errorResponse (statusCode, message) {
+  return {
+    statusCode,
+    headers: corsHeaders,
+    body: JSON.stringify({
+      message
+    })
+  }
+}
+
+function successResponse (payload) {
+  return {
+    statusCode: HTTP_CODES.success,
+    headers: corsHeaders,
+    body: JSON.stringify(payload)
+  }
 }
 
 exports.playDataHandler = async (event, context) => {
-  let action, payload
+  const { console, createPutObject, now, s3Client } = interfaces
+  let payload
   try {
-    action = {
-      type: 'storePlayData',
-      date: new Date()
-    }
     if (event.body) {
       payload = JSON.parse(event.body)
+    } else {
+      throw new Error('No body provided in event')
     }
   } catch (ex) {
-    console.error('Play data handler: unable to parse payload', ex.message)
+    console.error('[Play Data Handler] Unable to parse payload', ex.message)
+    return errorResponse(HTTP_CODES.clientError, `Unable to parse payload - expected JSON: ${ex.message}`)
   }
 
-  // Set the parameters
-  // 2021-12-01T23:15:12.json
-  // 2021-12-01T23:11:25.556Z.json
-  const currentDate = new Date()
+  // Generate S3 key e.g. 2021-12-01T23:11:25.556Z.json
+  const currentDate = now()
+  const folder = `${currentDate.toISOString().substring(0, 7)}`
   const filename = `${currentDate.toISOString()}.json`
+  const keypath = [folder, filename].join('/')
+  const payloadBody = JSON.stringify(payload)
+
+  // Set the S3 parameters
   const params = {
-    Bucket: 'boardgames-tracking', // The name of the bucket. For example, 'sample_bucket_101'.
-    Key: filename, // The name of the object. For example, 'sample_upload.txt'.
-    Body: JSON.stringify(payload || event, null, 2) // The content of the object. For example, 'Hello world!".
+    Bucket: 'boardgames-tracking',
+    Key: keypath,
+    Body: payloadBody
   }
 
   try {
-    await s3Client.send(new PutObjectCommand(params))
-    console.log(
-      'Successfully created ' +
-        params.Key +
-        ' and uploaded it to ' +
-        params.Bucket +
-        '/' +
-        params.Key
-    )
+    const putObject = createPutObject(params)
+    await s3Client.send(putObject)
+    console.log(`[Play Data Handler] Successfully stored ${payloadBody.length} bytes in ${params.Bucket}, ${params.Key}`)
   } catch (err) {
-    console.log('Error', err)
+    console.log('[Play Data Handler] Error', err.message)
+    return errorResponse(HTTP_CODES.serverError, `Unable to store payload: ${err.message}`)
   }
 
-  try {
-    // const ret = await axios(url);
-    response = {
-      statusCode: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true
-      },
-      body: JSON.stringify({
-        action, payload
-        // location: ret.data.trim()
-      })
-    }
-  } catch (err) {
-    console.log(err)
-    return err
-  }
-
-  return response
+  return successResponse({
+    message: 'Stored play data successfully',
+    folder,
+    filename,
+    keypath,
+    payload
+  })
 }

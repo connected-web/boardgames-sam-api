@@ -17,6 +17,11 @@
     "test": "standard && mocha tests/unit/",
     "lint": "standard --fix"
   },
+  "standard": {
+    "env": {
+      "mocha": true
+    }
+  },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4"
