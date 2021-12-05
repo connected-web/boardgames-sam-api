@@ -28,7 +28,7 @@ describe('Status Handler', () => {
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        name: 'boardgame-summary',
+        name: 'api-code',
         version: '1.0.0',
         description: 'Boardgame Summary API',
         currentDate: '2021-12-05T19:19:23.335Z'

@@ -1,11 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  sam-app
+  boardgames-sam-api
 
-  Sample SAM Template for sam-app
+  SAM Template for Boardgames SAM API
   
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
@@ -16,34 +15,22 @@ Globals:
       AllowOrigin: "'*'"
 
 Resources:
-  SummaryFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  StatusFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: boardgame-summary/
-      Handler: app.summaryHandler
+      CodeUri: api-code/
+      Handler: app.statusHandler
       Runtime: nodejs14.x
       Events:
         Summary:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /summary
-            Method: get
-  SummaryByYearFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: boardgame-summary/
-      Handler: app.summaryByYearHandler
-      Runtime: nodejs14.x
-      Events:
-        Summary:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /summary/{year}
+            Path: /status
             Method: get
   PlayDataFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: boardgame-summary/
+      CodeUri: api-code/
       Handler: app.playDataHandler
       Runtime: nodejs14.x
       Policies: 
@@ -51,23 +38,20 @@ Resources:
             BucketName: boardgames-tracking
       Events:
         Summary:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api 
           Properties:
             Path: /createPlayRecord
             Method: post
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  SummaryApi:
-    Description: "API Gateway endpoint URL for Prod stage for Summary function"
+  BoardgamesSamApi:
+    Description: "API Gateway endpoint URL for Prod stage of Boardgames SAM API"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/summary/"
-  SummaryFunction:
+  StatusFunction:
     Description: "Summary Lambda Function ARN"
-    Value: !GetAtt SummaryFunction.Arn
-  SummaryFunctionIamRole:
-    Description: "Implicit IAM Role created for Summary function"
-    Value: !GetAtt SummaryFunctionRole.Arn
+    Value: !GetAtt StatusFunction.Arn
+  StatusFunctionIamRole:
+    Description: "Implicit IAM Role created for Status function"
+    Value: !GetAtt StatusFunctionRole.Arn
   PlayDataFunction:
     Description: "PlayDataFunction Lambda Function ARN"
     Value: !GetAtt PlayDataFunction.Arn

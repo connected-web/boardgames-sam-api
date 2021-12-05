@@ -1,5 +1,5 @@
 {
-  "name": "boardgame-summary",
+  "name": "api-code",
   "version": "1.0.0",
   "description": "Boardgame Summary API",
   "main": "app.js",

@@ -11,7 +11,7 @@ To use the SAM CLI, you need the following tools.
 
 ## Getting Started
 
-`cd boardgame-summary`
+`cd api-code`
 
 `npm install`
 
