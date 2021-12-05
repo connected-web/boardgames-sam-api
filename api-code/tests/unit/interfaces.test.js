@@ -6,11 +6,11 @@ describe('Interfaces', () => {
     expect(typeof interfaces.modifyInterfaces).to.equal('function')
   })
 
-  it('should should expose the resetInterfaces function', () => {
+  it('should expose the resetInterfaces function', () => {
     expect(typeof interfaces.resetInterfaces).to.equal('function')
   })
 
-  it('should should expose the get function', () => {
+  it('should expose the get function', () => {
     expect(typeof interfaces.get).to.equal('function')
   })
 

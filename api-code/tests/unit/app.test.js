@@ -7,7 +7,7 @@ describe('SAM API App', () => {
   describe('Exported Handlers', () => {
     it('should export expected handler functions', () => {
       const actual = Object.keys(app)
-      const expected = ['statusHandler', 'createPlayRecordHandler']
+      const expected = ['createPlayRecordHandler', 'statusHandler']
       expect(actual).to.deep.equal(expected)
     })
   })
