@@ -27,5 +27,14 @@ From the project root:
 
 `sam deploy --guided`
 
-Navigate to `https://32r96w1hxa.execute-api.eu-west-2.amazonaws.com/Prod/summary/` to see output
+
+## Accessing the API
+
+To test the live endpoint, visit:
+- [https://mh2mmqhf1e.execute-api.eu-west-2.amazonaws.com/Prod/status/](https://mh2mmqhf1e.execute-api.eu-west-2.amazonaws.com/Prod/status/)
+
+## TODO
+
+Remove the old stack:
+- `https://32r96w1hxa.execute-api.eu-west-2.amazonaws.com/Prod/summary/`
 
