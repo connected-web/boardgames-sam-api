@@ -1,5 +1,6 @@
-on:
-  push:
+name: Check PR
+on: 
+  pull_request:
     branches:
       - main
       - master
