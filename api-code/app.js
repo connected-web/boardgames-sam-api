@@ -1,6 +1,6 @@
-const { playDataHandler, statusHandler } = require('./src/endpoints/_index')
+const { createPlayRecordHandler, statusHandler } = require('./src/endpoints/_index')
 
 module.exports = {
   statusHandler,
-  playDataHandler
+  createPlayRecordHandler
 }

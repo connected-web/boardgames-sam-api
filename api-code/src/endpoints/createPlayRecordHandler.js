@@ -12,7 +12,7 @@ async function handler (event, context) {
       throw new Error('No body provided in event')
     }
   } catch (ex) {
-    console.error('[Play Data Handler] Unable to parse payload', ex.message)
+    console.error('[Create Play Record Handler] Unable to parse payload', ex.message)
     return errorResponse(HTTP_CODES.clientError, `Unable to parse payload - expected JSON: ${ex.message}`)
   }
 
@@ -33,9 +33,9 @@ async function handler (event, context) {
   try {
     const putObject = createPutObject(params)
     await s3Client.send(putObject)
-    console.log(`[Play Data Handler] Successfully stored ${payloadBody.length} bytes in ${params.Bucket}, ${params.Key}`)
+    console.log(`[Create Play Record Handler] Successfully stored ${payloadBody.length} bytes in ${params.Bucket}, ${params.Key}`)
   } catch (err) {
-    console.log('[Play Data Handler] Error', err.message)
+    console.log('[Create Play Record Handler] Error', err.message)
     return errorResponse(HTTP_CODES.serverError, `Unable to store payload: ${err.message}`)
   }
 

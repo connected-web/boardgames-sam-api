@@ -1,7 +1,7 @@
 const statusHandler = require('./statusHander')
-const playDataHandler = require('./playDataHandler')
+const createPlayRecordHandler = require('./createPlayRecordHandler')
 
 module.exports = {
   statusHandler,
-  playDataHandler
+  createPlayRecordHandler
 }

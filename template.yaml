@@ -4,7 +4,7 @@ Description: >
   boardgames-sam-api
 
   SAM Template for Boardgames SAM API
-  
+
 Globals:
   Function:
     Timeout: 3
@@ -27,11 +27,11 @@ Resources:
           Properties:
             Path: /status
             Method: get
-  PlayDataFunction:
+  CreatePlayRecordFunction:
     Type: AWS::Serverless::Function 
     Properties:
       CodeUri: api-code/
-      Handler: app.playDataHandler
+      Handler: app.createPlayRecordHandler
       Runtime: nodejs14.x
       Policies: 
         - S3FullAccessPolicy:
@@ -52,9 +52,9 @@ Outputs:
   StatusFunctionIamRole:
     Description: "Implicit IAM Role created for Status function"
     Value: !GetAtt StatusFunctionRole.Arn
-  PlayDataFunction:
-    Description: "PlayDataFunction Lambda Function ARN"
-    Value: !GetAtt PlayDataFunction.Arn
-  PlayDataFunctionIamRole:
-    Description: "Implicit IAM Role created for Play Data function"
-    Value: !GetAtt PlayDataFunctionRole.Arn
+  CreatePlayRecordFunction:
+    Description: "CreatePlayRecordFunction Lambda Function ARN"
+    Value: !GetAtt CreatePlayRecordFunction.Arn
+  CreatePlayRecordFunctionIamRole:
+    Description: "Implicit IAM Role created for Create Play Record function"
+    Value: !GetAtt CreatePlayRecordFunctionRole.Arn

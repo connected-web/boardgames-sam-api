@@ -3,7 +3,7 @@ const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
-describe('Play Data Handler', () => {
+describe('Create Play Record Handler', () => {
   beforeEach(() => {
     logs.capture()
     modifyInterfaces({
@@ -33,7 +33,7 @@ describe('Play Data Handler', () => {
     const body = JSON.stringify(payload)
     const event = { body }
 
-    const actual = await app.playDataHandler(event)
+    const actual = await app.createPlayRecordHandler(event)
     const expected = {
       statusCode: 200,
       headers: {
@@ -51,7 +51,7 @@ describe('Play Data Handler', () => {
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
       ['info', 'Confirm using stub'],
-      ['log', '[Play Data Handler] Successfully stored 49 bytes in boardgames-tracking, 2021-12/2021-12-05T19:19:23.335Z.json']
+      ['log', '[Create Play Record Handler] Successfully stored 49 bytes in boardgames-tracking, 2021-12/2021-12-05T19:19:23.335Z.json']
     ])
   })
 
@@ -67,7 +67,7 @@ describe('Play Data Handler', () => {
     const payload = { some: 'data' }
     const body = JSON.stringify(payload)
     const event = { body }
-    const actual = await app.playDataHandler(event)
+    const actual = await app.createPlayRecordHandler(event)
     const expected = {
       statusCode: 500,
       headers: {
@@ -81,7 +81,7 @@ describe('Play Data Handler', () => {
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
       ['info', 'Using throw error stub'],
-      ['log', '[Play Data Handler] Error', 'Stub "unable to write to S3" error']
+      ['log', '[Create Play Record Handler] Error', 'Stub "unable to write to S3" error']
     ])
   })
 })
