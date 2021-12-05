@@ -1,12 +1,12 @@
 const { expect } = require('chai')
 const logs = require('./helpers/logs')
 const app = require('../../app.js')
+const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
 describe('Status Handler', () => {
-  let originalInterfaces
   before(() => {
     logs.capture()
-    originalInterfaces = app.modifyInterfaces({
+    modifyInterfaces({
       now: () => {
         return new Date('2021-12-05T19:19:23.335Z')
       },
@@ -15,7 +15,7 @@ describe('Status Handler', () => {
   })
 
   after(() => {
-    app.modifyInterfaces(originalInterfaces)
+    resetInterfaces()
     logs.reset()
   })
 

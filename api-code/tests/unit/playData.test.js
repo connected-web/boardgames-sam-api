@@ -1,11 +1,12 @@
 const { expect } = require('chai')
 const logs = require('./helpers/logs')
 const app = require('../../app.js')
+const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
 describe('Play Data Handler', () => {
   beforeEach(() => {
     logs.capture()
-    app.modifyInterfaces({
+    modifyInterfaces({
       now () {
         return new Date('2021-12-05T19:19:23.335Z')
       },
@@ -19,7 +20,7 @@ describe('Play Data Handler', () => {
   })
 
   afterEach(() => {
-    app.resetInterfaces()
+    resetInterfaces()
     logs.reset()
   })
 
@@ -55,7 +56,7 @@ describe('Play Data Handler', () => {
   })
 
   it('should generate an error response when an error is thrown writing to S3', async () => {
-    app.modifyInterfaces({
+    modifyInterfaces({
       s3Client: {
         async send () {
           console.info('Using throw error stub')
