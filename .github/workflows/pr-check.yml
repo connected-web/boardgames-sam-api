@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - uses: aws-actions/setup-sam@v1
+
+      - name: Use Node JS LTS
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install npm dependencies
+        working-directory: ./boardgame-summary
+        run: npm install
+
+      - name: Run build steps
+        working-directory: ./boardgame-summary
+        run: npm build -s
+
+      - name: Run default tests
+        working-directory: ./boardgame-summary
+        run: npm test -s
+
+      - run: sam build --use-container
