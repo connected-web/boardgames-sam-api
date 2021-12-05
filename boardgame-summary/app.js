@@ -1,12 +1,8 @@
 const { PutObjectCommand } = require('@aws-sdk/client-s3')
-const { s3Client } = require('./src/s3Client.js')
-const corsHeaders = require('./src/helpers/corsHeaders')
 const packageJson = require('./package.json')
-
-const HTTP_CODES = {
-  success: 200,
-  clientError: 400
-}
+const { s3Client } = require('./src/helpers/s3Client.js')
+const HTTP_CODES = require('./src/helpers/httpCodes')
+const { successResponse, errorResponse } = require('./src/helpers/responses')
 
 function createPutObject (params) {
   return new PutObjectCommand(params)
@@ -39,24 +35,6 @@ exports.statusHandler = async (event, context) => {
     description,
     currentDate: now().toISOString()
   })
-}
-
-function errorResponse (statusCode, message) {
-  return {
-    statusCode,
-    headers: corsHeaders,
-    body: JSON.stringify({
-      message
-    })
-  }
-}
-
-function successResponse (payload) {
-  return {
-    statusCode: HTTP_CODES.success,
-    headers: corsHeaders,
-    body: JSON.stringify(payload)
-  }
 }
 
 exports.playDataHandler = async (event, context) => {
