@@ -1,5 +1,6 @@
 const { yamlParse, yamlDump } = require('yaml-cfn');
 const fs = require('fs')
+const app = require('./api-code/')
 
 const baseTemplate = fs.readFileSync('base-template.yaml', 'utf8')
 const template = yamlParse(baseTemplate)
@@ -67,25 +68,34 @@ function addEndpoint(config, base) {
   Object.assign(base.Outputs, outputBlock)
 }
 
-addEndpoint({
-  name: 'Status',
-  codePath: 'api-code/',
-  runTime: 'nodejs14.x',
-  handlerId: 'statusHandler',
-  handlerPath: '/status',
-  handlerMethod: 'GET'
-}, template)
+const endpoints = Object.entries(app).map(([key, entry]) => {
+  const endpoint = {
+    name: entry.routeName,
+    codePath: 'api-code/',
+    runTime: 'nodejs14.x',
+    handlerId: key,
+    handlerPath: entry.routePath,
+    handlerMethod: entry.routeMethod
+  }
+  return endpoint
+}).filter(endpoint => endpoint.handlerId && endpoint.handlerPath && endpoint.handlerMethod)
 
-addEndpoint({
-  name: 'Create Play Record',
-  codePath: 'api-code/',
-  runTime: 'nodejs14.x',
-  handlerId: 'createPlayRecordHandler',
-  handlerPath: '/createPlayRecord',
-  handlerMethod: 'POST'
-}, template)
+if (endpoints.length !== Object.values(app).length) {
+  console.warn('Warning: Mismatch between exposed method handlers from app; and filtered endpoints.')
+  console.warn('Exposed method handlers:')
+  console.warn('  ', Object.keys(app))
+  console.warn('Filtered endpoints:')
+  console.warn('  ', endpoints.map(n => n.name))
+  console.warn('Please check that handlerId, handlerPath, and handlerMethod are correctly set on each exposed endpoint.')
+}
 
-console.log('Result:', template)
+endpoints.forEach(endpoint => {
+  console.log('Creating resource template for', endpoint)
+  addEndpoint(endpoint, template)
+})
+
 const templateYaml = yamlDump(template)
+const templateFilepath = 'template.yaml'
 
-fs.writeFileSync('template.yaml', templateYaml, 'utf8')
+console.log('Writing', templateFilepath, templateYaml.length, 'bytes', 'with', endpoints.length, 'endpoints', endpoints.map(n => n.name))
+fs.writeFileSync(templateFilepath, templateYaml, 'utf8')

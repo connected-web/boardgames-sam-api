@@ -12,18 +12,6 @@ Globals:
       AllowHeaders: '''Content-Type'''
       AllowOrigin: '''*'''
 Resources:
-  StatusFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: api-code/
-      Handler: app.statusHandler
-      Runtime: nodejs14.x
-      Events:
-        Summary:
-          Type: Api
-          Properties:
-            Path: /status
-            Method: GET
   CreatePlayRecordFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -36,20 +24,32 @@ Resources:
           Properties:
             Path: /createPlayRecord
             Method: POST
+  StatusFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.statusHandler
+      Runtime: nodejs14.x
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /status
+            Method: GET
 Outputs:
   BoardgamesSamApi:
     Description: API Gateway endpoint URL for Prod stage of Boardgames SAM API
     Value: !Sub >-
       https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/summary/
-  StatusFunction:
-    Description: Status Lambda Function ARN
-    Value: !GetAtt StatusFunction.Arn
-  StatusFunctionIamRole:
-    Description: Implicit IAM Role created for Status function
-    Value: !GetAtt StatusFunctionRole.Arn
   CreatePlayRecordFunction:
     Description: CreatePlayRecord Lambda Function ARN
     Value: !GetAtt CreatePlayRecordFunction.Arn
   CreatePlayRecordFunctionIamRole:
     Description: Implicit IAM Role created for CreatePlayRecord function
     Value: !GetAtt CreatePlayRecordFunctionRole.Arn
+  StatusFunction:
+    Description: Status Lambda Function ARN
+    Value: !GetAtt StatusFunction.Arn
+  StatusFunctionIamRole:
+    Description: Implicit IAM Role created for Status function
+    Value: !GetAtt StatusFunctionRole.Arn
