@@ -1,0 +1,28 @@
+{
+  "name": "boardgames-sam-api",
+  "version": "1.0.0",
+  "description": "This project contains an API for summarising boardgame play stats using AWS SAM",
+  "scripts": {
+    "build": "node generate-sam-template.js && sam build",
+    "test": "cd api-code && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/connected-web/boardgames-sam-api.git"
+  },
+  "keywords": [
+    "AWS",
+    "SAM",
+    "Boardgames",
+    "API"
+  ],
+  "author": "Connected Web",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/connected-web/boardgames-sam-api/issues"
+  },
+  "homepage": "https://github.com/connected-web/boardgames-sam-api#readme",
+  "dependencies": {
+    "yaml-cfn": "^0.3.1"
+  }
+}
