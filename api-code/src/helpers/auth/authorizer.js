@@ -33,8 +33,8 @@ async function getApiKeys () {
 
 async function authorize (event, context) {
   const headers = event.headers || {}
-  const user = headers['Calisaurus-User']
-  const userApiKey = headers['Calisaurus-User-Api-Key']
+  const user = headers['calisaurus-user']
+  const userApiKey = headers['calisaurus-user-api-key']
 
   if (user && userApiKey) {
     return authorizeUser({ event, user, userApiKey })
