@@ -23,22 +23,19 @@ Resources:
           Type: Api
           Properties:
             Path: /status
-            Method: get
+            Method: GET
   CreatePlayRecordFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: api-code/
       Handler: app.createPlayRecordHandler
       Runtime: nodejs14.x
-      Policies:
-        - S3FullAccessPolicy:
-            BucketName: boardgames-tracking
       Events:
         Summary:
           Type: Api
           Properties:
             Path: /createPlayRecord
-            Method: post
+            Method: POST
 Outputs:
   BoardgamesSamApi:
     Description: API Gateway endpoint URL for Prod stage of Boardgames SAM API
@@ -46,13 +43,13 @@ Outputs:
       https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/summary/
   StatusFunction:
     Description: Summary Lambda Function ARN
-    Value: !GetAtt StatusFunction.Arn
+    Value: '!GetAtt StatusFunction.Arn'
   StatusFunctionIamRole:
     Description: Implicit IAM Role created for Status function
-    Value: !GetAtt StatusFunctionRole.Arn
+    Value: '!GetAtt StatusFunctionRole.Arn'
   CreatePlayRecordFunction:
-    Description: CreatePlayRecordFunction Lambda Function ARN
-    Value: !GetAtt CreatePlayRecordFunction.Arn
+    Description: Summary Lambda Function ARN
+    Value: '!GetAtt CreatePlayRecordFunction.Arn'
   CreatePlayRecordFunctionIamRole:
-    Description: Implicit IAM Role created for Create Play Record function
-    Value: !GetAtt CreatePlayRecordFunctionRole.Arn
+    Description: Implicit IAM Role created for CreatePlayRecord function
+    Value: '!GetAtt CreatePlayRecordFunctionRole.Arn'
