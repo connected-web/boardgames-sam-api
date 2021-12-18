@@ -18,9 +18,10 @@ async function handler (event, context) {
 
   // Generate S3 key e.g. 2021-12-01T23:11:25.556Z.json
   const currentDate = now()
-  const folder = `${currentDate.toISOString().substring(0, 7)}`
+  const year = `${currentDate.toISOString().substring(0, 4)}`
+  const month = `${currentDate.toISOString().substring(5, 7)}`
   const filename = `${currentDate.toISOString()}.json`
-  const keypath = [folder, filename].join('/')
+  const keypath = [year, month, filename].join('/')
   const payloadBody = JSON.stringify(payload)
 
   // Set the S3 parameters
@@ -41,7 +42,8 @@ async function handler (event, context) {
 
   return successResponse({
     message: 'Stored play data successfully',
-    folder,
+    year,
+    month,
     filename,
     keypath,
     payload

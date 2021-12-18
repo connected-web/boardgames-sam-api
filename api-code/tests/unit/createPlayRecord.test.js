@@ -42,16 +42,17 @@ describe('Create Play Record Handler', () => {
       },
       body: JSON.stringify({
         message: 'Stored play data successfully',
-        folder: '2021-12',
+        year: '2021',
+        month: '12',
         filename: '2021-12-05T19:19:23.335Z.json',
-        keypath: '2021-12/2021-12-05T19:19:23.335Z.json',
+        keypath: '2021/12/2021-12-05T19:19:23.335Z.json',
         payload
       })
     }
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
       ['info', 'Confirm using stub'],
-      ['log', '[Create Play Record Handler] Successfully stored 49 bytes in boardgames-tracking, 2021-12/2021-12-05T19:19:23.335Z.json']
+      ['log', '[Create Play Record Handler] Successfully stored 49 bytes in boardgames-tracking, 2021/12/2021-12-05T19:19:23.335Z.json']
     ])
   })
 
