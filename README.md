@@ -31,10 +31,9 @@ From the project root:
 ## Accessing the API
 
 To test the live endpoint, visit:
-- [https://mh2mmqhf1e.execute-api.eu-west-2.amazonaws.com/Prod/status/](https://mh2mmqhf1e.execute-api.eu-west-2.amazonaws.com/Prod/status/)
+- [https://nn58gn0krl.execute-api.eu-west-2.amazonaws.com/Prod/status](https://nn58gn0krl.execute-api.eu-west-2.amazonaws.com/Prod/status)
 
 ## TODO
 
-Remove the old stack:
-- `https://32r96w1hxa.execute-api.eu-west-2.amazonaws.com/Prod/summary/`
+- Create a stable Route 53 record for the API gateway URL
 
