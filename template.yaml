@@ -18,6 +18,9 @@ Resources:
       CodeUri: api-code/
       Handler: app.createPlayRecordHandler
       Runtime: nodejs14.x
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: boardgames-tracking
       Events:
         Summary:
           Type: Api
@@ -30,6 +33,9 @@ Resources:
       CodeUri: api-code/
       Handler: app.listUsersHandler
       Runtime: nodejs14.x
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: boardgames-tracking
       Events:
         Summary:
           Type: Api
@@ -42,6 +48,9 @@ Resources:
       CodeUri: api-code/
       Handler: app.statusHandler
       Runtime: nodejs14.x
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: boardgames-tracking
       Events:
         Summary:
           Type: Api

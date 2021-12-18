@@ -15,6 +15,11 @@ function createResourceFunction(config) {
         CodeUri: codePath,
         Handler: `app.${handlerId}`,
         Runtime: runTime,
+        Policies: [{
+          S3FullAccessPolicy: {
+            BucketName: 'boardgames-tracking'
+          }
+        }],
         Events: {
           Summary: {
             Type: 'Api',
