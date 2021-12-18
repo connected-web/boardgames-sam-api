@@ -1,5 +1,5 @@
-const getObject = require('./getObject')
-const putObject = require('./putObject')
+const getObject = require('./aws/getObject')
+const putObject = require('./aws/putObject')
 
 const interfaces = {
   console,
