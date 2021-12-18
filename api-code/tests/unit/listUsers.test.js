@@ -13,6 +13,13 @@ describe('List Users Handler', () => {
           { user: 'Anna' }
         ])
       },
+      authorizer (event) {
+        event.authorized = {
+          actions: {
+            '/list/users': 'GET'
+          }
+        }
+      },
       console
     })
   })
@@ -23,7 +30,7 @@ describe('List Users Handler', () => {
   })
 
   it('should list users who have available access tokens', async () => {
-    const actual = await app.listUsersHandler({ some: 'event data' })
+    const actual = await app.listUsersHandler({ some: 'event data', path: '/list/users', httpMethod: 'GET' })
     const expected = {
       statusCode: 200,
       headers: {

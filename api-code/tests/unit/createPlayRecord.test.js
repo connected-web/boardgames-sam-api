@@ -10,6 +10,13 @@ describe('Create Play Record Handler', () => {
       now () {
         return new Date('2021-12-05T19:19:23.335Z')
       },
+      authorizer (event) {
+        event.authorized = {
+          actions: {
+            '/createPlayRecord': 'POST'
+          }
+        }
+      },
       putObject () {
         console.info('Confirm using stub')
         return false
@@ -29,7 +36,7 @@ describe('Create Play Record Handler', () => {
       in: 'an s3 bucket'
     }
     const body = JSON.stringify(payload)
-    const event = { body }
+    const event = { body, path: '/createPlayRecord', httpMethod: 'POST' }
 
     const actual = await app.createPlayRecordHandler(event)
     const expected = {
@@ -56,6 +63,13 @@ describe('Create Play Record Handler', () => {
 
   it('should generate an error response when an error is thrown writing to S3', async () => {
     modifyInterfaces({
+      authorizer (event) {
+        event.authorized = {
+          actions: {
+            '/createPlayRecord': 'POST'
+          }
+        }
+      },
       putObject () {
         console.info('Using throw error stub')
         throw new Error('Stub "unable to write to S3" error')
@@ -63,7 +77,7 @@ describe('Create Play Record Handler', () => {
     })
     const payload = { some: 'data' }
     const body = JSON.stringify(payload)
-    const event = { body }
+    const event = { body, path: '/createPlayRecord', httpMethod: 'POST' }
     const actual = await app.createPlayRecordHandler(event)
     const expected = {
       statusCode: 500,

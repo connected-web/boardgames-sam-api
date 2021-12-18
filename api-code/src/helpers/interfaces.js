@@ -1,7 +1,9 @@
+const authorizer = require('./auth/authorizer')
 const getObject = require('./aws/getObject')
 const putObject = require('./aws/putObject')
 
 const interfaces = {
+  authorizer,
   console,
   getObject,
   putObject,

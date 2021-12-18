@@ -3,7 +3,12 @@ const HTTP_CODES = require('../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../helpers/responses')
 
 async function handler (event, context) {
-  const { console, putObject, now } = interfaces.get()
+  const { authorizer, console, putObject, now } = interfaces.get()
+  await authorizer(event, context)
+  if (event?.authorized?.actions[event.path] !== 'POST') {
+    return errorResponse(HTTP_CODES.clientUnauthorized, 'User not authorized to access this endpoint.')
+  }
+
   let payload
   try {
     if (event.body) {
