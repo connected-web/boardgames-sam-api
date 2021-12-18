@@ -20,20 +20,19 @@ jobs:
           node-version: 14.x
 
       - name: Install npm dependencies
+        run: npm install
+
+      - name: Install npm dependencies
         working-directory: ./api-code
         run: npm install
 
       - name: Run build steps
-        working-directory: ./api-code
-        run: npm build -s
+        run: npm run build -s
 
       - name: Run default tests
         working-directory: ./api-code
         run: npm test -s
         
-      - name: SAM Build
-        run: sam build --use-container
-
       - name: Register Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

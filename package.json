@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "This project contains an API for summarising boardgame play stats using AWS SAM",
   "scripts": {
-    "build": "node generate-sam-template.js && sam build",
+    "build": "node generate-sam-template.js && sam build --use-container",
     "test": "cd api-code && npm test",
     "lint": "cd api-code && npm run lint"
   },
