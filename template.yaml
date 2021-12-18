@@ -24,6 +24,18 @@ Resources:
           Properties:
             Path: /createPlayRecord
             Method: POST
+  ListUsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.listUsersHandler
+      Runtime: nodejs14.x
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /users/list
+            Method: GET
   StatusFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -47,6 +59,12 @@ Outputs:
   CreatePlayRecordFunctionIamRole:
     Description: Implicit IAM Role created for CreatePlayRecord function
     Value: !GetAtt CreatePlayRecordFunctionRole.Arn
+  ListUsersFunction:
+    Description: ListUsers Lambda Function ARN
+    Value: !GetAtt ListUsersFunction.Arn
+  ListUsersFunctionIamRole:
+    Description: Implicit IAM Role created for ListUsers function
+    Value: !GetAtt ListUsersFunctionRole.Arn
   StatusFunction:
     Description: Status Lambda Function ARN
     Value: !GetAtt StatusFunction.Arn

@@ -4,7 +4,8 @@
   "description": "This project contains an API for summarising boardgame play stats using AWS SAM",
   "scripts": {
     "build": "node generate-sam-template.js && sam build",
-    "test": "cd api-code && npm test"
+    "test": "cd api-code && npm test",
+    "lint": "cd api-code && npm run lint"
   },
   "repository": {
     "type": "git",

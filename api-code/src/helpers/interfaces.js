@@ -1,14 +1,10 @@
-const { PutObjectCommand } = require('@aws-sdk/client-s3')
-const { s3Client } = require('./s3Client.js')
-
-function createPutObject (params) {
-  return new PutObjectCommand(params)
-}
+const getObject = require('./getObject')
+const putObject = require('./putObject')
 
 const interfaces = {
   console,
-  createPutObject,
-  s3Client,
+  getObject,
+  putObject,
   now: () => new Date()
 }
 const originalInterfaces = Object.assign({}, interfaces)

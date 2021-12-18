@@ -10,11 +10,9 @@ describe('Create Play Record Handler', () => {
       now () {
         return new Date('2021-12-05T19:19:23.335Z')
       },
-      s3Client: {
-        async send () {
-          console.info('Confirm using stub')
-          return false
-        }
+      putObject () {
+        console.info('Confirm using stub')
+        return false
       }
     })
   })
@@ -58,11 +56,9 @@ describe('Create Play Record Handler', () => {
 
   it('should generate an error response when an error is thrown writing to S3', async () => {
     modifyInterfaces({
-      s3Client: {
-        async send () {
-          console.info('Using throw error stub')
-          throw new Error('Stub "unable to write to S3" error')
-        }
+      putObject () {
+        console.info('Using throw error stub')
+        throw new Error('Stub "unable to write to S3" error')
       }
     })
     const payload = { some: 'data' }

@@ -3,7 +3,7 @@ const HTTP_CODES = require('../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../helpers/responses')
 
 async function handler (event, context) {
-  const { console, createPutObject, now, s3Client } = interfaces.get()
+  const { console, putObject, now } = interfaces.get()
   let payload
   try {
     if (event.body) {
@@ -24,17 +24,14 @@ async function handler (event, context) {
   const keypath = [year, month, filename].join('/')
   const payloadBody = JSON.stringify(payload)
 
-  // Set the S3 parameters
-  const params = {
-    Bucket: 'boardgames-tracking',
-    Key: keypath,
-    Body: payloadBody
-  }
-
   try {
-    const putObject = createPutObject(params)
-    await s3Client.send(putObject)
-    console.log(`[Create Play Record Handler] Successfully stored ${payloadBody.length} bytes in ${params.Bucket}, ${params.Key}`)
+    const bucket = 'boardgames-tracking'
+    await putObject({
+      Bucket: bucket,
+      Key: keypath,
+      Body: payloadBody
+    })
+    console.log(`[Create Play Record Handler] Successfully stored ${payloadBody.length} bytes in ${bucket}, ${keypath}`)
   } catch (err) {
     console.log('[Create Play Record Handler] Error', err.message)
     return errorResponse(HTTP_CODES.serverError, `Unable to store payload: ${err.message}`)
