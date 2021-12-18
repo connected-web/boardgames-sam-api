@@ -1,5 +1,5 @@
 {
-  "name": "api-code",
+  "name": "boardgames",
   "version": "1.0.0",
   "description": "Boardgame Summary API",
   "main": "app.js",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
-    "standard": "^14.3.1"
+    "standard": "^14.3.1",
+    "yaml": "^1.10.2"
   }
 }
