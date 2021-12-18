@@ -2,7 +2,7 @@ const { yamlParse, yamlDump } = require('yaml-cfn');
 const fs = require('fs')
 
 const baseTemplate = fs.readFileSync('base-template.yaml', 'utf8')
-const base = yamlParse(baseTemplate)
+const template = yamlParse(baseTemplate)
 
 function createResourceFunction(config) {
   const { name, codePath, runTime, handlerId, handlerPath, handlerMethod } = config
@@ -35,12 +35,22 @@ function createOutputFunction(config) {
   const resourceName = `${sanitizedName}Function`
   const outputBlock = {
     [resourceName]: {
-      Description: 'Summary Lambda Function ARN',
-      Value: `!GetAtt ${resourceName}.Arn`
+      Description: `${sanitizedName} Lambda Function ARN`,
+      Value: {
+        'Fn::GetAtt': [
+          `${resourceName}`,
+          'Arn'
+        ]
+      }
     },
     [`${resourceName}IamRole`]: {
       Description: `Implicit IAM Role created for ${sanitizedName} function`,
-      Value: `!GetAtt ${resourceName}Role.Arn`
+      Value: {
+        'Fn::GetAtt': [
+          `${resourceName}Role`,
+          'Arn'
+        ]
+      }
     }
   }
   return outputBlock
@@ -64,7 +74,7 @@ addEndpoint({
   handlerId: 'statusHandler',
   handlerPath: '/status',
   handlerMethod: 'GET'
-}, base)
+}, template)
 
 addEndpoint({
   name: 'Create Play Record',
@@ -73,9 +83,9 @@ addEndpoint({
   handlerId: 'createPlayRecordHandler',
   handlerPath: '/createPlayRecord',
   handlerMethod: 'POST'
-}, base)
+}, template)
 
-console.log('Result:', base)
-const resultTemplate = yamlDump(base)
+console.log('Result:', template)
+const templateYaml = yamlDump(template)
 
-fs.writeFileSync('template.yaml', resultTemplate, 'utf8')
+fs.writeFileSync('template.yaml', templateYaml, 'utf8')

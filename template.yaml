@@ -42,14 +42,14 @@ Outputs:
     Value: !Sub >-
       https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/summary/
   StatusFunction:
-    Description: Summary Lambda Function ARN
-    Value: '!GetAtt StatusFunction.Arn'
+    Description: Status Lambda Function ARN
+    Value: !GetAtt StatusFunction.Arn
   StatusFunctionIamRole:
     Description: Implicit IAM Role created for Status function
-    Value: '!GetAtt StatusFunctionRole.Arn'
+    Value: !GetAtt StatusFunctionRole.Arn
   CreatePlayRecordFunction:
-    Description: Summary Lambda Function ARN
-    Value: '!GetAtt CreatePlayRecordFunction.Arn'
+    Description: CreatePlayRecord Lambda Function ARN
+    Value: !GetAtt CreatePlayRecordFunction.Arn
   CreatePlayRecordFunctionIamRole:
     Description: Implicit IAM Role created for CreatePlayRecord function
-    Value: '!GetAtt CreatePlayRecordFunctionRole.Arn'
+    Value: !GetAtt CreatePlayRecordFunctionRole.Arn
