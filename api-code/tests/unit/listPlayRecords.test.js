@@ -13,7 +13,7 @@ describe.only('List Play Records', () => {
       authorizer (event) {
         event.authorized = {
           actions: {
-            '/createPlayRecord': 'POST'
+            '/playrecords/list': 'GET'
           }
         }
       },
@@ -32,7 +32,7 @@ describe.only('List Play Records', () => {
   it('should return play records from S3', async () => {
     const event = { path: '/playrecords/list', httpMethod: 'GET' }
 
-    const actual = await app.listPlayRecords(event)
+    const actual = await app.listPlayRecordsHandler(event)
     const expected = {
       statusCode: 200,
       headers: {
@@ -46,6 +46,9 @@ describe.only('List Play Records', () => {
         }]
       })
     }
+    const actualBody = JSON.parse(actual.body)
+    const expectedBody = JSON.parse(expected.body)
+    expect(actualBody).to.deep.equal(expectedBody)
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
       ['info', 'Confirm using stub'],
