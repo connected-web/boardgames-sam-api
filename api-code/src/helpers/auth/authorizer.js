@@ -23,7 +23,7 @@ async function getApiKeys () {
       Key: 'apiKeys.json'
     })
     apiKeys = JSON.parse(apiKeysObject)
-    console.log('API Keys:', apiKeys)
+    console.log('API Keys:', apiKeys.length, 'keys found')
   } catch (ex) {
     console.error('Unable to authorize request:', ex.message)
   }

@@ -6,7 +6,7 @@ async function handler (event, context) {
   const { authorizer, console, getObject } = interfaces.get()
   await authorizer(event, context)
   if (event?.authorized?.actions[event.path] !== 'GET') {
-    return errorResponse(HTTP_CODES.clientUnauthorized, 'User not authorized to access this endpoint.')
+    return errorResponse(HTTP_CODES.clientUnauthorized, `User not authorized to access this endpoint: ${JSON.stringify(event.authorized)}`)
   }
 
   const users = []
