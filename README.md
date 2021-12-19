@@ -33,6 +33,19 @@ From the project root:
 To test the live endpoint, visit:
 - [https://nn58gn0krl.execute-api.eu-west-2.amazonaws.com/Prod/status](https://nn58gn0krl.execute-api.eu-west-2.amazonaws.com/Prod/status)
 
+## Authorization
+
+The API is protected by API Keys. In order to interact with endpoints other than the status endpoint, the following headers need to be provided:
+
+```js
+headers: {
+  'calisaurus-user': 'User Name', /* e.g. j.bloggs, */ 
+  'calisaurus-user-api-key': 'API KEY STRING' /* e.g XYZ-123-RTU-etc. */
+}
+```
+
+To create new API keys please talk to a system administrator.
+
 ## TODO
 
 - Create a stable Route 53 record for the API gateway URL
