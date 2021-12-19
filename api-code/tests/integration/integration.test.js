@@ -21,19 +21,24 @@ describe('Status endpoint', () => {
 describe('Fully authorized request', () => {
   it('should GET a list of users from the remote server', async () => {
     const { CALI_API_USER, CALI_API_USER_KEY } = process.env
+    let response
     if (CALI_API_USER && CALI_API_USER_KEY) {
       const url = `${API_SERVER}/users/list`
-      try {
-        const response = await axios.get(url, {
-          headers: {
-            'Calisaurus-User': CALI_API_USER,
-            'Calisaurus-User-Api-Key': CALI_API_USER_KEY
-          }
-        })
-        expect(response.data).to.deep.equal({ some: 'list of users ' })
-      } catch (ex) {
-        expect(ex?.response?.data).to.deep.equal({ ...ex.response.headers })
+      const headers = {
+        'calisaurus-user': CALI_API_USER,
+        'calisaurus-user-api-key': CALI_API_USER_KEY
       }
+      try {
+        response = await axios.get(url, { headers })
+      } catch (ex) {
+        response = ex.response
+      }
+      expect(response.data).to.deep.equal({
+        users: [
+          'Hannah',
+          'John'
+        ]
+      })
     } else {
       throw new Error('Expected keys: CALI_API_USER and CALI_API_USER_KEY need to be set on your environment to run this test.')
     }
