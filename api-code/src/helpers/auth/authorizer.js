@@ -8,7 +8,7 @@ async function authorizeUser ({ event, user, userApiKey }) {
       console.log(`[Authorise User] Authorised matching user API Key for "${user}"`)
       event.authorized = {
         actions: {
-          [event.path]: [event.httpMethod]
+          [event.path]: event.httpMethod
         }
       }
     }
