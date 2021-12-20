@@ -27,6 +27,21 @@ Resources:
           Properties:
             Path: /createPlayRecord
             Method: POST
+  ListPlayRecordsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.listPlayRecordsHandler
+      Runtime: nodejs14.x
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: boardgames-tracking
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /playrecords/list
+            Method: GET
   ListUsersFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -68,6 +83,12 @@ Outputs:
   CreatePlayRecordFunctionIamRole:
     Description: Implicit IAM Role created for CreatePlayRecord function
     Value: !GetAtt CreatePlayRecordFunctionRole.Arn
+  ListPlayRecordsFunction:
+    Description: ListPlayRecords Lambda Function ARN
+    Value: !GetAtt ListPlayRecordsFunction.Arn
+  ListPlayRecordsFunctionIamRole:
+    Description: Implicit IAM Role created for ListPlayRecords function
+    Value: !GetAtt ListPlayRecordsFunctionRole.Arn
   ListUsersFunction:
     Description: ListUsers Lambda Function ARN
     Value: !GetAtt ListUsersFunction.Arn
