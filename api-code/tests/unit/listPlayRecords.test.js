@@ -3,7 +3,7 @@ const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
-describe.only('List Play Records', () => {
+describe('List Play Records', () => {
   beforeEach(() => {
     logs.capture()
     modifyInterfaces({
@@ -17,9 +17,27 @@ describe.only('List Play Records', () => {
           }
         }
       },
-      putObject () {
-        console.info('Confirm using stub')
-        return false
+      async listObjects () {
+        console.info('Confirm using listObjects stub')
+        return {
+          Contents: [{
+            Key: 'a.json'
+          }, {
+            Key: 'b.json'
+          }, {
+            Key: 'apiKeys.json'
+          }, {
+            Key: 'not-a-json.txt'
+          }]
+        }
+      },
+      async getObject ({ Key }) {
+        console.info(`Confirm using getObject stub for ${Key}`)
+        return JSON.stringify({
+          key: Key,
+          game: 'some game',
+          winner: 'some winner'
+        })
       }
     })
   })
@@ -40,7 +58,12 @@ describe.only('List Play Records', () => {
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        playrecords: [{
+        playRecords: [{
+          key: 'a.json',
+          game: 'some game',
+          winner: 'some winner'
+        }, {
+          key: 'b.json',
           game: 'some game',
           winner: 'some winner'
         }]
@@ -51,8 +74,10 @@ describe.only('List Play Records', () => {
     expect(actualBody).to.deep.equal(expectedBody)
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
-      ['info', 'Confirm using stub'],
-      ['log', '[Create Play Record Handler] Successfully stored 49 bytes in boardgames-tracking, 2021/12/2021-12-05T19:19:23.335Z.json']
+      ['info', 'Confirm using listObjects stub'],
+      ['info', 'Confirm using getObject stub for a.json'],
+      ['info', 'Confirm using getObject stub for b.json'],
+      ['log', '[List Play Records Handler] Received 119 bytes from S3.']
     ])
   })
 })
