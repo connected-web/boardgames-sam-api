@@ -7,10 +7,10 @@ async function getObject ({ Bucket, Key }) {
     success = resolve
     failure = reject
   })
-  const getObjectCommand = new GetObjectCommand({ Bucket, Key })
+  const goc = new GetObjectCommand({ Bucket, Key })
 
   try {
-    const response = await s3Client.send(getObjectCommand)
+    const response = await s3Client.send(goc)
     const chunks = []
     response.Body.once('error', err => failure(err))
     response.Body.on('data', chunk => chunks.push(chunk))

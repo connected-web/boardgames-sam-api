@@ -1,16 +1,16 @@
-const { ListObjectsV2Command } = require('@aws-sdk/client-s3')
+const { DeleteObjectCommand } = require('@aws-sdk/client-s3')
 const { s3Client } = require('./s3Client')
 
-async function listObjects ({ Bucket, Prefix }) {
+async function deleteObject ({ Bucket, Key }) {
   let success, failure
   const result = new Promise((resolve, reject) => {
     success = resolve
     failure = reject
   })
-  const loc = new ListObjectsV2Command({ Bucket, Prefix })
+  const doc = new DeleteObjectCommand({ Bucket, Key })
 
   try {
-    const response = await s3Client.send(loc)
+    const response = await s3Client.send(doc)
     success(response)
   } catch (err) {
     failure(err)
@@ -18,4 +18,4 @@ async function listObjects ({ Bucket, Prefix }) {
   return result
 }
 
-module.exports = listObjects
+module.exports = deleteObject

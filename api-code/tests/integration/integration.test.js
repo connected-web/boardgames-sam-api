@@ -60,9 +60,7 @@ describe('Fully authorized request', () => {
       }
       const actual = response.data
       expect(actual).to.deep.equal({
-        playRecords: [{
-          some: 'data'
-        }]
+        playRecords: []
       })
     } else {
       throw new Error('Expected keys: CALI_API_USER and CALI_API_USER_KEY need to be set on your environment to run this test.')

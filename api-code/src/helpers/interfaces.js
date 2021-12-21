@@ -1,4 +1,5 @@
 const authorizer = require('./auth/authorizer')
+const deleteObject = require('./aws/deleteObject')
 const getObject = require('./aws/getObject')
 const putObject = require('./aws/putObject')
 const listObjects = require('./aws/listObjects')
@@ -6,6 +7,7 @@ const listObjects = require('./aws/listObjects')
 const interfaces = {
   authorizer,
   console,
+  deleteObject,
   getObject,
   putObject,
   listObjects,

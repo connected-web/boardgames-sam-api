@@ -42,6 +42,21 @@ Resources:
           Properties:
             Path: /playrecords/create
             Method: POST
+  DeletePlayRecordFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.playrecords_delete
+      Runtime: nodejs14.x
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: boardgames-tracking
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /playrecords/delete
+            Method: DELETE
   ListPlayRecordsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -89,6 +104,12 @@ Outputs:
   CreatePlayRecordFunctionIamRole:
     Description: Implicit IAM Role created for CreatePlayRecord function
     Value: !GetAtt CreatePlayRecordFunctionRole.Arn
+  DeletePlayRecordFunction:
+    Description: DeletePlayRecord Lambda Function ARN
+    Value: !GetAtt DeletePlayRecordFunction.Arn
+  DeletePlayRecordFunctionIamRole:
+    Description: Implicit IAM Role created for DeletePlayRecord function
+    Value: !GetAtt DeletePlayRecordFunctionRole.Arn
   ListPlayRecordsFunction:
     Description: ListPlayRecords Lambda Function ARN
     Value: !GetAtt ListPlayRecordsFunction.Arn

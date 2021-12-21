@@ -3,8 +3,8 @@ const { s3Client } = require('./s3Client')
 
 async function putObject ({ Bucket, Key, Body }) {
   const params = { Bucket, Key, Body }
-  const putObject = new PutObjectCommand(params)
-  return s3Client.send(putObject)
+  const poc = new PutObjectCommand(params)
+  return s3Client.send(poc)
 }
 
 module.exports = putObject
