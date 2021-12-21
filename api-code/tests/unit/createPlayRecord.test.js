@@ -3,7 +3,7 @@ const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
-describe('Create Play Record Handler', () => {
+describe('Create Play Record', () => {
   beforeEach(() => {
     logs.capture()
     modifyInterfaces({
@@ -38,7 +38,7 @@ describe('Create Play Record Handler', () => {
     const body = JSON.stringify(payload)
     const event = { body, path: '/playrecords/create', httpMethod: 'POST' }
 
-    const actual = await app.createPlayRecordHandler(event)
+    const actual = await app['playrecords.create'](event)
     const expected = {
       statusCode: 200,
       headers: {
@@ -57,7 +57,7 @@ describe('Create Play Record Handler', () => {
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
       ['info', 'Confirm using stub'],
-      ['log', '[Create Play Record Handler] Successfully stored 49 bytes in boardgames-tracking, 2021/12/2021-12-05T19:19:23.335Z.json']
+      ['log', '[Create Play Record] Successfully stored 49 bytes in boardgames-tracking, 2021/12/2021-12-05T19:19:23.335Z.json']
     ])
   })
 
@@ -78,7 +78,7 @@ describe('Create Play Record Handler', () => {
     const payload = { some: 'data' }
     const body = JSON.stringify(payload)
     const event = { body, path: '/playrecords/create', httpMethod: 'POST' }
-    const actual = await app.createPlayRecordHandler(event)
+    const actual = await app['playrecords.create'](event)
     const expected = {
       statusCode: 500,
       headers: {
@@ -92,7 +92,7 @@ describe('Create Play Record Handler', () => {
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
       ['info', 'Using throw error stub'],
-      ['log', '[Create Play Record Handler] Error', 'Stub "unable to write to S3" error']
+      ['log', '[Create Play Record] Error', 'Stub "unable to write to S3" error']
     ])
   })
 })

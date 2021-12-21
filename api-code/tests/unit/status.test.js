@@ -3,7 +3,7 @@ const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
-describe('Status Handler', () => {
+describe('Status Endpoint', () => {
   before(() => {
     logs.capture()
     modifyInterfaces({
@@ -20,7 +20,7 @@ describe('Status Handler', () => {
   })
 
   it('should report information from package JSON and the current date/time', async () => {
-    const actual = await app.statusHandler({ some: 'event data' })
+    const actual = await app['default.status']({ some: 'event data' })
     const expected = {
       statusCode: 200,
       headers: {

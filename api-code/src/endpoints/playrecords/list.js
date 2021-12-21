@@ -1,6 +1,6 @@
-const interfaces = require('../helpers/interfaces')
-const HTTP_CODES = require('../helpers/httpCodes')
-const { successResponse, errorResponse } = require('../helpers/responses')
+const interfaces = require('../../helpers/interfaces')
+const HTTP_CODES = require('../../helpers/httpCodes')
+const { successResponse, errorResponse } = require('../../helpers/responses')
 
 async function getJsonObject (key) {
   const { getObject } = interfaces.get()
@@ -44,9 +44,9 @@ async function handler (event, context) {
     const records = await Promise.all(recordGathering)
     result.playRecords = records
 
-    console.log(`[List Play Records Handler] Received ${JSON.stringify(records).length} bytes from S3.`)
+    console.log(`[List Play Records] Received ${JSON.stringify(records).length} bytes from S3.`)
   } catch (err) {
-    console.log('[List Play Records Handler] Error', err.message)
+    console.log('[List Play Records] Error', err.message)
     return errorResponse(HTTP_CODES.serverError, `Unable to list play records: ${err.message} ${err.stack}`)
   }
 

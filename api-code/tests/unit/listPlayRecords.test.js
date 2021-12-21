@@ -50,7 +50,7 @@ describe('List Play Records', () => {
   it('should return play records from S3', async () => {
     const event = { path: '/playrecords/list', httpMethod: 'GET' }
 
-    const actual = await app.listPlayRecordsHandler(event)
+    const actual = await app['playrecords.list'](event)
     const expected = {
       statusCode: 200,
       headers: {
@@ -77,7 +77,7 @@ describe('List Play Records', () => {
       ['info', 'Confirm using listObjects stub'],
       ['info', 'Confirm using getObject stub for a.json'],
       ['info', 'Confirm using getObject stub for b.json'],
-      ['log', '[List Play Records Handler] Received 119 bytes from S3.']
+      ['log', '[List Play Records] Received 119 bytes from S3.']
     ])
   })
 })
