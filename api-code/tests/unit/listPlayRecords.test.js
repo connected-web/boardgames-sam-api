@@ -50,7 +50,7 @@ describe('List Play Records', () => {
   it('should return play records from S3', async () => {
     const event = { path: '/playrecords/list', httpMethod: 'GET' }
 
-    const actual = await app['playrecords.list'](event)
+    const actual = await app.playrecords_list(event)
     const expected = {
       statusCode: 200,
       headers: {

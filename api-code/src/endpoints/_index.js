@@ -1,18 +1,16 @@
 const fs = require('fs')
 const path = require('path')
 
-const flattenObject = (obj = {}, res = {}, extraKey = '') => {
+const flattenTree = (obj = {}, res = {}, extraKey = '') => {
   for (const key in obj) {
     if (typeof obj[key] !== 'object') {
       res[extraKey + key] = obj[key]
     } else {
-      flattenObject(obj[key], res, `${extraKey}${key}.`)
+      flattenTree(obj[key], res, `${extraKey}${key}_`)
     }
   }
   return res
 }
-
-module.exports = flattenObject
 
 function findEndpointGroups (basePath) {
   return fs.readdirSync(basePath)
@@ -47,7 +45,7 @@ function findEndpoints (basePath) {
   }
   const groups = [defaultGroup, ...findEndpointGroups(basePath)]
   const endpointTree = groups.map(findEndpointFiles).reduce((acc, item) => Object.assign(acc, item), {})
-  const endpoints = flattenObject(endpointTree)
+  const endpoints = flattenTree(endpointTree)
   return endpoints
 }
 

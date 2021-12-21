@@ -38,7 +38,7 @@ describe('Create Play Record', () => {
     const body = JSON.stringify(payload)
     const event = { body, path: '/playrecords/create', httpMethod: 'POST' }
 
-    const actual = await app['playrecords.create'](event)
+    const actual = await app.playrecords_create(event)
     const expected = {
       statusCode: 200,
       headers: {
@@ -78,7 +78,7 @@ describe('Create Play Record', () => {
     const payload = { some: 'data' }
     const body = JSON.stringify(payload)
     const event = { body, path: '/playrecords/create', httpMethod: 'POST' }
-    const actual = await app['playrecords.create'](event)
+    const actual = await app.playrecords_create(event)
     const expected = {
       statusCode: 500,
       headers: {

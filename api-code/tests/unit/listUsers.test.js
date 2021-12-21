@@ -30,7 +30,7 @@ describe('List Users', () => {
   })
 
   it('should list users who have available access tokens', async () => {
-    const actual = await app['users.list']({ some: 'event data', path: '/list/users', httpMethod: 'GET' })
+    const actual = await app.users_list({ some: 'event data', path: '/list/users', httpMethod: 'GET' })
     const expected = {
       statusCode: 200,
       headers: {

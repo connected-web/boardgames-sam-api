@@ -7,7 +7,7 @@ describe('SAM API App', () => {
   describe('Exported Endpoints', () => {
     it('should export expected endpoints functions', () => {
       const actual = Object.keys(app)
-      const expected = ['default.status', 'playrecords.create', 'playrecords.list', 'users.list']
+      const expected = ['default_status', 'playrecords_create', 'playrecords_list', 'users_list']
       expect(actual).to.deep.equal(expected)
     })
   })

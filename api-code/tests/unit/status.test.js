@@ -20,7 +20,7 @@ describe('Status Endpoint', () => {
   })
 
   it('should report information from package JSON and the current date/time', async () => {
-    const actual = await app['default.status']({ some: 'event data' })
+    const actual = await app.default_status({ some: 'event data' })
     const expected = {
       statusCode: 200,
       headers: {
