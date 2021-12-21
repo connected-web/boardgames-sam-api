@@ -43,4 +43,29 @@ describe('Fully authorized request', () => {
       throw new Error('Expected keys: CALI_API_USER and CALI_API_USER_KEY need to be set on your environment to run this test.')
     }
   })
+
+  it('should GET a list of play records from the remote server', async () => {
+    const { CALI_API_USER, CALI_API_USER_KEY } = process.env
+    let response
+    if (CALI_API_USER && CALI_API_USER_KEY) {
+      const url = `${API_SERVER}/playrecords/list`
+      const headers = {
+        'calisaurus-user': CALI_API_USER,
+        'calisaurus-user-api-key': CALI_API_USER_KEY
+      }
+      try {
+        response = await axios.get(url, { headers })
+      } catch (ex) {
+        response = ex.response
+      }
+      const actual = response.data
+      expect(actual).to.deep.equal({
+        playRecords: [{
+          some: 'data'
+        }]
+      })
+    } else {
+      throw new Error('Expected keys: CALI_API_USER and CALI_API_USER_KEY need to be set on your environment to run this test.')
+    }
+  })
 })
