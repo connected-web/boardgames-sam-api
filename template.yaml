@@ -12,11 +12,11 @@ Globals:
       AllowHeaders: '''Content-Type,Calisaurus-User,Calisaurus-User-Api-Key'''
       AllowOrigin: '''*'''
 Resources:
-  CreatePlayRecordFunction:
+  StatusFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: api-code/
-      Handler: app.createPlayRecordHandler
+      Handler: app.default.status
       Runtime: nodejs14.x
       Policies:
         - S3FullAccessPolicy:
@@ -25,13 +25,28 @@ Resources:
         Summary:
           Type: Api
           Properties:
-            Path: /createPlayRecord
+            Path: /status
+            Method: GET
+  CreatePlayRecordFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.playrecords.create
+      Runtime: nodejs14.x
+      Policies:
+        - S3FullAccessPolicy:
+            BucketName: boardgames-tracking
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /playrecords/create
             Method: POST
   ListPlayRecordsFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: api-code/
-      Handler: app.listPlayRecordsHandler
+      Handler: app.playrecords.list
       Runtime: nodejs14.x
       Policies:
         - S3FullAccessPolicy:
@@ -46,7 +61,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: api-code/
-      Handler: app.listUsersHandler
+      Handler: app.users.list
       Runtime: nodejs14.x
       Policies:
         - S3FullAccessPolicy:
@@ -57,26 +72,17 @@ Resources:
           Properties:
             Path: /users/list
             Method: GET
-  StatusFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: api-code/
-      Handler: app.statusHandler
-      Runtime: nodejs14.x
-      Policies:
-        - S3FullAccessPolicy:
-            BucketName: boardgames-tracking
-      Events:
-        Summary:
-          Type: Api
-          Properties:
-            Path: /status
-            Method: GET
 Outputs:
   BoardgamesSamApi:
     Description: API Gateway endpoint URL for Prod stage of Boardgames SAM API
     Value: !Sub >-
       https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/summary/
+  StatusFunction:
+    Description: Status Lambda Function ARN
+    Value: !GetAtt StatusFunction.Arn
+  StatusFunctionIamRole:
+    Description: Implicit IAM Role created for Status function
+    Value: !GetAtt StatusFunctionRole.Arn
   CreatePlayRecordFunction:
     Description: CreatePlayRecord Lambda Function ARN
     Value: !GetAtt CreatePlayRecordFunction.Arn
@@ -95,9 +101,3 @@ Outputs:
   ListUsersFunctionIamRole:
     Description: Implicit IAM Role created for ListUsers function
     Value: !GetAtt ListUsersFunctionRole.Arn
-  StatusFunction:
-    Description: Status Lambda Function ARN
-    Value: !GetAtt StatusFunction.Arn
-  StatusFunctionIamRole:
-    Description: Implicit IAM Role created for Status function
-    Value: !GetAtt StatusFunctionRole.Arn

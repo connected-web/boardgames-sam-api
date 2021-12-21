@@ -3,7 +3,7 @@ const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
-describe('List Users Handler', () => {
+describe('List Users', () => {
   before(() => {
     logs.capture()
     modifyInterfaces({
@@ -30,7 +30,7 @@ describe('List Users Handler', () => {
   })
 
   it('should list users who have available access tokens', async () => {
-    const actual = await app.listUsersHandler({ some: 'event data', path: '/list/users', httpMethod: 'GET' })
+    const actual = await app['users.list']({ some: 'event data', path: '/list/users', httpMethod: 'GET' })
     const expected = {
       statusCode: 200,
       headers: {
@@ -47,7 +47,7 @@ describe('List Users Handler', () => {
     expect(actual).to.deep.equal(expected)
 
     expect(logs.get()).to.deep.equal([
-      ['log', '[List Users Handler] Read 32 bytes from S3 config.']
+      ['log', '[List Users] Read 32 bytes from S3 config.']
     ])
   })
 })

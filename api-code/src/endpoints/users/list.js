@@ -1,6 +1,6 @@
-const interfaces = require('../helpers/interfaces')
-const HTTP_CODES = require('../helpers/httpCodes')
-const { successResponse, errorResponse } = require('../helpers/responses')
+const interfaces = require('../../helpers/interfaces')
+const HTTP_CODES = require('../../helpers/httpCodes')
+const { successResponse, errorResponse } = require('../../helpers/responses')
 
 async function handler (event, context) {
   const { authorizer, console, getObject } = interfaces.get()
@@ -22,9 +22,9 @@ async function handler (event, context) {
     })
 
     users.push(...apiUsers)
-    console.log(`[List Users Handler] Read ${apiKeysObject.length} bytes from S3 config.`)
+    console.log(`[List Users] Read ${apiKeysObject.length} bytes from S3 config.`)
   } catch (err) {
-    console.log('[List Users Handler] Error', err.message)
+    console.log('[List Users] Error', err.message)
     return errorResponse(HTTP_CODES.serverError, `Unable to list users: ${err.message}`)
   }
 

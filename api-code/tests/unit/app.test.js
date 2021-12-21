@@ -4,10 +4,10 @@ const app = require('../../app.js')
 const endpoints = Object.values(app)
 
 describe('SAM API App', () => {
-  describe('Exported Handlers', () => {
-    it('should export expected handler functions', () => {
+  describe('Exported Endpoints', () => {
+    it('should export expected endpoints functions', () => {
       const actual = Object.keys(app)
-      const expected = ['createPlayRecordHandler', 'listPlayRecordsHandler', 'listUsersHandler', 'statusHandler']
+      const expected = ['default.status', 'playrecords.create', 'playrecords.list', 'users.list']
       expect(actual).to.deep.equal(expected)
     })
   })
