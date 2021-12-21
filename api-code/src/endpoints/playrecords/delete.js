@@ -49,5 +49,10 @@ async function handler (event, context) {
 handler.routeName = 'Delete Play Record'
 handler.routePath = '/playrecords/delete'
 handler.routeMethod = 'DELETE'
+handler.routePolicies = [{
+  S3FullAccessPolicy: {
+    BucketName: 'boardgames-tracking'
+  }
+}]
 
 module.exports = handler

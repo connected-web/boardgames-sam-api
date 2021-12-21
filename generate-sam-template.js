@@ -6,7 +6,8 @@ const baseTemplate = fs.readFileSync('base-template.yaml', 'utf8')
 const template = yamlParse(baseTemplate)
 
 function createResourceFunction(config) {
-  const { name, codePath, runTime, handlerId, handlerPath, handlerMethod } = config
+  const { name, codePath, runTime, handlerId, handlerPath, handlerMethod, handlerPolicies } = config
+  const policies = [handlerPolicies || []].flat(2).filter(n => n)
   const sanitizedName = name.replace(/[^a-zA-Z]/g, '')
   const resourceBlock = {
     [`${sanitizedName}Function`]: {
@@ -15,11 +16,7 @@ function createResourceFunction(config) {
         CodeUri: codePath,
         Handler: `app.${handlerId}`,
         Runtime: runTime,
-        Policies: [{
-          S3FullAccessPolicy: {
-            BucketName: 'boardgames-tracking'
-          }
-        }],
+        Policies: policies,
         Events: {
           Summary: {
             Type: 'Api',
@@ -80,7 +77,8 @@ const endpoints = Object.entries(app).map(([key, entry]) => {
     runTime: 'nodejs14.x',
     handlerId: key,
     handlerPath: entry.routePath,
-    handlerMethod: entry.routeMethod
+    handlerMethod: entry.routeMethod,
+    handlerPolicies: entry.routePolicies
   }
   return endpoint
 }).filter(endpoint => endpoint.handlerId && endpoint.handlerPath && endpoint.handlerMethod)

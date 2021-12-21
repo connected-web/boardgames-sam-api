@@ -18,9 +18,7 @@ Resources:
       CodeUri: api-code/
       Handler: app.default_status
       Runtime: nodejs14.x
-      Policies:
-        - S3FullAccessPolicy:
-            BucketName: boardgames-tracking
+      Policies: []
       Events:
         Summary:
           Type: Api

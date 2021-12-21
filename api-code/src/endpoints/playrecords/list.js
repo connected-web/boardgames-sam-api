@@ -56,5 +56,10 @@ async function handler (event, context) {
 handler.routeName = 'List Play Records'
 handler.routePath = '/playrecords/list'
 handler.routeMethod = 'GET'
+handler.routePolicies = [{
+  S3FullAccessPolicy: {
+    BucketName: 'boardgames-tracking'
+  }
+}]
 
 module.exports = handler
