@@ -13,7 +13,7 @@ describe('Create Play Record Handler', () => {
       authorizer (event) {
         event.authorized = {
           actions: {
-            '/createPlayRecord': 'POST'
+            '/playrecords/create': 'POST'
           }
         }
       },
@@ -36,7 +36,7 @@ describe('Create Play Record Handler', () => {
       in: 'an s3 bucket'
     }
     const body = JSON.stringify(payload)
-    const event = { body, path: '/createPlayRecord', httpMethod: 'POST' }
+    const event = { body, path: '/playrecords/create', httpMethod: 'POST' }
 
     const actual = await app.createPlayRecordHandler(event)
     const expected = {
@@ -66,7 +66,7 @@ describe('Create Play Record Handler', () => {
       authorizer (event) {
         event.authorized = {
           actions: {
-            '/createPlayRecord': 'POST'
+            '/playrecords/create': 'POST'
           }
         }
       },
@@ -77,7 +77,7 @@ describe('Create Play Record Handler', () => {
     })
     const payload = { some: 'data' }
     const body = JSON.stringify(payload)
-    const event = { body, path: '/createPlayRecord', httpMethod: 'POST' }
+    const event = { body, path: '/playrecords/create', httpMethod: 'POST' }
     const actual = await app.createPlayRecordHandler(event)
     const expected = {
       statusCode: 500,

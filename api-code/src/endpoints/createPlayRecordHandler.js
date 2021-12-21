@@ -53,7 +53,7 @@ async function handler (event, context) {
 }
 
 handler.routeName = 'Create Play Record'
-handler.routePath = '/createPlayRecord'
+handler.routePath = '/playrecords/create'
 handler.routeMethod = 'POST'
 
 module.exports = handler
