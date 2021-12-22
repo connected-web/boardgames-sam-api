@@ -6,7 +6,7 @@ async function handler (event, context) {
   const { authorizer, console, deleteObject } = interfaces.get()
   await authorizer(event, context)
   if (event?.authorized?.actions[event.path] !== 'DELETE') {
-    return errorResponse(HTTP_CODES.clientUnauthorized, 'User not authorized to access this endpoint.')
+    return errorResponse(HTTP_CODES.clientUnauthorized, 'User not authorized to access this endpoint: ' + JSON.stringify(event.authorized))
   }
 
   let payload
