@@ -34,7 +34,8 @@ async function handler (event, context) {
     await putObject({
       Bucket: bucket,
       Key: keypath,
-      Body: payloadBody
+      Body: payloadBody,
+      ContentType: 'application/json; charset=utf-8'
     })
     console.log(`[Create Play Record] Successfully stored ${payloadBody.length} bytes in ${bucket}, ${keypath}`)
   } catch (err) {

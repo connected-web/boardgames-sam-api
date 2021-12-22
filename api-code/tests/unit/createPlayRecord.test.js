@@ -17,8 +17,8 @@ describe('Create Play Record', () => {
           }
         }
       },
-      putObject () {
-        console.info('Confirm using stub')
+      putObject (data) {
+        console.info('Confirm using putObject stub:', data.ContentType)
         return false
       }
     })
@@ -56,7 +56,7 @@ describe('Create Play Record', () => {
     }
     expect(actual).to.deep.equal(expected)
     expect(logs.get()).to.deep.equal([
-      ['info', 'Confirm using stub'],
+      ['info', 'Confirm using putObject stub:', 'application/json; charset=utf-8'],
       ['log', '[Create Play Record] Successfully stored 49 bytes in boardgames-tracking, 2021/12/2021-12-05T19:19:23.335Z.json']
     ])
   })
