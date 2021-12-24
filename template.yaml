@@ -12,6 +12,11 @@ Globals:
       AllowHeaders: '''Content-Type,Calisaurus-User,Calisaurus-User-Api-Key'''
       AllowOrigin: '''*'''
 Resources:
+  BoardgamesApiTable:
+    Properties:
+      TableName: boardgames-api
+      Tags:
+        AppType: Serverless
   StatusFunction:
     Type: AWS::Serverless::Function
     Properties:
