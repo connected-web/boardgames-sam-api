@@ -8,6 +8,7 @@ s3_prefix = "boardgames-api"
 region = "eu-west-2"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
+image_repositories = []
 
 [qa]
 [qa.deploy]
