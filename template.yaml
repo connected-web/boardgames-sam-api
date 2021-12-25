@@ -13,6 +13,7 @@ Globals:
       AllowOrigin: '''*'''
 Resources:
   BoardgamesApiTable:
+    Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: boardgames-api
   StatusFunction:
