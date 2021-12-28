@@ -29,7 +29,7 @@ jobs:
       - name: Run build steps
         run: npm run build -s
         env:
-          CURRENT_BRANCH: ${GITHUB_REF##*/}
+          CURRENT_BRANCH: ${{ github.ref }}
 
       - name: Run default tests
         working-directory: ./api-code
