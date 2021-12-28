@@ -1,7 +1,7 @@
 {
   "name": "boardgames",
   "version": "1.0.5",
-  "description": "Boardgame Summary API",
+  "description": "An API for summarising boardgame play stats using AWS SAM.",
   "main": "app.js",
   "author": "SAM CLI",
   "license": "ISC",

@@ -1,6 +1,6 @@
 # Boardgames Summary API
 
-This project contains an API for summarising boardgame play stats using AWS SAM
+An API for summarising boardgame play stats using AWS SAM.
 
 ## Prerequisites
 
