@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/connected-web/boardgames-sam-api#readme",
   "dependencies": {
-    "dynamodb-doc": "^1.0.0",
     "yaml-cfn": "^0.3.1"
   }
 }
