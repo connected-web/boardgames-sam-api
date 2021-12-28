@@ -2,6 +2,7 @@ const HTTP_CODES = require('../../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../../helpers/responses')
 
 async function handler (event, context) {
+  let getItem
   try {
     getItem = require('../../generic/ddbTable/getItem')
   } catch (ex) {
