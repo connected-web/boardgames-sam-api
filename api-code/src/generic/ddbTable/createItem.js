@@ -1,6 +1,6 @@
-const doc = require('dynamodb-doc')
 const HTTP_CODES = require('../../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../../helpers/responses')
+const { dynamo } = require('../../helpers/aws/dynamoDBClient')
 
 async function createItem (tableName, event, context) {
   let success
@@ -28,7 +28,6 @@ async function createItem (tableName, event, context) {
     Item: item
   }
 
-  const dynamo = new doc.DynamoDB()
   dynamo.putItem(params, (err, data) => {
     let response
     if (err) {

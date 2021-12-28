@@ -1,9 +1,7 @@
-const { successResponse } = require('../../helpers/responses')
+const patchItem = require('../../generic/ddbTable/patchItem')
 
 async function handler (event, context) {
-  return successResponse({
-    stub: 'value'
-  })
+  return patchItem('boardgames-api', event, context)
 }
 
 handler.routeName = 'Patch User'

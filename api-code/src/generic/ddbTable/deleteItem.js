@@ -1,6 +1,6 @@
-const doc = require('dynamodb-doc')
 const HTTP_CODES = require('../../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../../helpers/responses')
+const { dynamo } = require('../../helpers/aws/dynamoDBClient')
 
 async function deleteItem (tableName, event, context) {
   let success
@@ -20,7 +20,6 @@ async function deleteItem (tableName, event, context) {
     }
   }
 
-  const dynamo = new doc.DynamoDB()
   dynamo.deleteItem(params, (err, data) => {
     let response
     if (err) {

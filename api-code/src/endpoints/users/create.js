@@ -1,9 +1,7 @@
-const { successResponse } = require('../../helpers/responses')
+const createItem = require('../../generic/ddbTable/createItem')
 
 async function handler (event, context) {
-  return successResponse({
-    stub: 'value'
-  })
+  return createItem('boardgames-api', event, context)
 }
 
 handler.routeName = 'Create User'

@@ -3,7 +3,7 @@ const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
 
-describe('Users : Generic DDB Table', () => {
+describe('Users Model', () => {
   before(() => {
     logs.capture()
     modifyInterfaces({})
@@ -14,8 +14,8 @@ describe('Users : Generic DDB Table', () => {
     logs.reset()
   })
 
-  it('should process getItem', async () => {
-    const event = { path: '/users/getItem/someResource', pathParams: { resourceId: 'someResource' }, httpMethod: 'GET' }
+  it('should allow an item to be read via getItem', async () => {
+    const event = { path: '/users/getItem/someResource', pathParameters: { resourceId: 'someResource' }, httpMethod: 'GET' }
     const actual = await app.users_get(event)
     const expected = {
       statusCode: 200,
@@ -24,7 +24,10 @@ describe('Users : Generic DDB Table', () => {
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        getItem: 'function'
+        resourceId: 'someResource',
+        doc: {
+          data: 'no data'
+        }
       })
     }
     const actualBody = JSON.parse(actual.body)
