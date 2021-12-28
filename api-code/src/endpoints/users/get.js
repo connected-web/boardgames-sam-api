@@ -10,7 +10,7 @@ async function handler (event, context) {
   }
 
   try {
-    const response = getItem('boardgames-api', event, context)
+    const response = await getItem('boardgames-api', event, context)
     successResponse({ response })
   } catch (ex) {
     errorResponse(HTTP_CODES.serverError, 'Error calling genericDDBTable.getItem handler;', ex.message)
