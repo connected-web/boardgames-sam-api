@@ -1,5 +1,5 @@
 const HTTP_CODES = require('../../helpers/httpCodes')
-const { errorResponse } = require('../../helpers/responses')
+const { successResponse, errorResponse } = require('../../helpers/responses')
 
 async function handler (event, context) {
   let genericDDBTable, getItem
@@ -16,7 +16,8 @@ async function handler (event, context) {
   }
 
   try {
-    return getItem(event, context)
+    const response = getItem(event, context)
+    successResponse({ response })
   } catch (ex) {
     errorResponse(HTTP_CODES.serverError, 'Error calling genericDDBTable.getItem handler;', ex.message)
   }
