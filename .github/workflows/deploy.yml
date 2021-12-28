@@ -28,10 +28,14 @@ jobs:
 
       - name: Run build steps
         run: npm run build -s
+        env:
+          CURRENT_BRANCH: ${{ github.ref }}
 
       - name: Run default tests
         working-directory: ./api-code
         run: npm test -s
+        env:
+          CURRENT_BRANCH: ${{ github.ref }}
         
       - name: Register Credentials
         uses: aws-actions/configure-aws-credentials@v1

@@ -1,9 +1,9 @@
 {
   "name": "boardgames-sam-api",
-  "version": "1.0.0",
-  "description": "This project contains an API for summarising boardgame play stats using AWS SAM",
+  "version": "1.0.5",
+  "description": "An API for summarising boardgame play stats using AWS SAM.",
   "scripts": {
-    "build": "node generate-sam-template.js && sam build --use-container",
+    "build": "node record-current-branch.js && node generate-sam-template.js && sam build --use-container",
     "test": "cd api-code && npm test",
     "test:integration": "cd api-code && npm run test:integration",
     "lint": "cd api-code && npm run lint"
