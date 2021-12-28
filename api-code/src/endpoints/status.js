@@ -13,7 +13,7 @@ async function handler (event, context) {
   let currentBranch = 'unknown'
   const currentBranchFilepath = path.join(__dirname, '../../current-branch.txt')
   try {
-    currentBranch = (await asyncFs.readFile(currentBranchFilepath, 'utf8')).trim()
+    currentBranch = process.env.CURRENT_BRANCH || (await asyncFs.readFile(currentBranchFilepath, 'utf8')).trim()
   } catch (ex) {
     console.error('Status Endpoint; unable to read', currentBranchFilepath, '- check if build command executed correctly.')
   }
