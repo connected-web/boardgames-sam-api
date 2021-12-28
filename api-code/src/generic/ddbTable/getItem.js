@@ -1,5 +1,4 @@
 const doc = require('dynamodb-doc')
-const dynamo = new doc.DynamoDB()
 const HTTP_CODES = require('../../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../../helpers/responses')
 
@@ -21,6 +20,7 @@ async function getItem (tableName, event, context) {
     }
   }
 
+  const dynamo = new doc.DynamoDB()
   dynamo.getItem(params, (err, data) => {
     let response
     if (err) {

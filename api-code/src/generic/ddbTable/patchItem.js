@@ -1,5 +1,4 @@
 const doc = require('dynamodb-doc')
-const dynamo = new doc.DynamoDB()
 const HTTP_CODES = require('../../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../../helpers/responses')
 
@@ -28,6 +27,7 @@ async function patchItem (tableName, event, context) {
     Item: item
   }
 
+  const dynamo = new doc.DynamoDB()
   dynamo.getItem(getItemParams, (err, data) => {
     let response
     if (err) {
