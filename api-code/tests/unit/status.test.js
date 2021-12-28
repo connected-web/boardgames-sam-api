@@ -1,8 +1,9 @@
+const path = require('path')
+const asyncFs = require('fs/promises')
 const { expect } = require('chai')
 const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
-const asyncExec = require('./helpers/asyncExec')
 const packageJson = require('../../package.json')
 
 describe('Status Endpoint', () => {
@@ -23,7 +24,15 @@ describe('Status Endpoint', () => {
 
   it('should report information from package JSON and the current date/time', async () => {
     const actual = await app.default_status({ some: 'event data' })
-    const currentBranch = (await asyncExec('git rev-parse --abbrev-ref HEAD')).stdout.trim()
+
+    let currentBranch = 'unknown'
+    const currentBranchFilepath = path.join(__dirname, '../../current-branch.txt')
+    try {
+      currentBranch = process.env.CURRENT_BRANCH || (await asyncFs.readFile(currentBranchFilepath, 'utf8')).trim()
+    } catch (ex) {
+      console.error('Status Endpoint; unable to read', currentBranchFilepath, '- check if build command executed correctly.')
+    }
+
     const expected = {
       statusCode: 200,
       headers: {
@@ -33,7 +42,7 @@ describe('Status Endpoint', () => {
       body: JSON.stringify({
         name: 'boardgames',
         version: packageJson.version,
-        description: 'Boardgame Summary API',
+        description: 'An API for summarising boardgame play stats using AWS SAM.',
         currentBranch,
         currentDate: '2021-12-05T19:19:23.335Z'
       })
