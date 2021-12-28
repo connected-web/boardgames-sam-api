@@ -1,8 +1,9 @@
 const HTTP_CODES = require('../../helpers/httpCodes')
 const { successResponse, errorResponse } = require('../../helpers/responses')
-const { dynamo } = require('../../helpers/aws/dynamoDBClient')
+const interfaces = require('../../helpers/interfaces')
 
 async function getItem (tableName, event, context) {
+  const { dynamo } = interfaces.get()
   let success
   const result = new Promise((resolve, reject) => {
     success = resolve

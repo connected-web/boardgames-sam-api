@@ -3,6 +3,7 @@ const deleteObject = require('./aws/deleteObject')
 const getObject = require('./aws/getObject')
 const putObject = require('./aws/putObject')
 const listObjects = require('./aws/listObjects')
+const { dynamo } = require('./aws/dynamoDBClient')
 
 const interfaces = {
   authorizer,
@@ -11,6 +12,7 @@ const interfaces = {
   getObject,
   putObject,
   listObjects,
+  dynamo,
   now: () => new Date()
 }
 const originalInterfaces = Object.assign({}, interfaces)
