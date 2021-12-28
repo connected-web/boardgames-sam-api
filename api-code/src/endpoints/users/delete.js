@@ -1,5 +1,10 @@
-const genericDDBTable = require('../../generic/ddbTable')
-const handler = genericDDBTable('boardgames-api').deleteItem
+const { successResponse } = require('../../helpers/responses')
+
+async function handler (event, context) {
+  return successResponse({
+    stub: 'value'
+  })
+}
 
 handler.routeName = 'Delete User'
 handler.routePath = '/users/delete/{resourceId}'

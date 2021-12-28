@@ -1,5 +1,10 @@
-const genericDDBTable = require('../../generic/ddbTable')
-const handler = genericDDBTable('boardgames-api').createItem
+const { successResponse } = require('../../helpers/responses')
+
+async function handler (event, context) {
+  return successResponse({
+    stub: 'value'
+  })
+}
 
 handler.routeName = 'Create User'
 handler.routePath = '/users/create/{resourceId}'
