@@ -1,6 +1,6 @@
 # Boardgames Summary API
 
-This project contains an API for summarising boardgame play stats using AWS SAM
+An API for summarising boardgame play stats using AWS SAM.
 
 ## Prerequisites
 
@@ -32,6 +32,9 @@ From the project root:
 
 To test the live endpoint, visit:
 - [https://nn58gn0krl.execute-api.eu-west-2.amazonaws.com/Prod/status](https://nn58gn0krl.execute-api.eu-west-2.amazonaws.com/Prod/status)
+
+To test the QA endpoint, visit:
+- [https://2sgdfns2ng.execute-api.eu-west-2.amazonaws.com/Stage/status](https://2sgdfns2ng.execute-api.eu-west-2.amazonaws.com/Stage/status)
 
 ## Authorization
 

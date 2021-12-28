@@ -6,6 +6,16 @@ stack_name = "boardgames-api"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-z2zew3n5c75o"
 s3_prefix = "boardgames-api"
 region = "eu-west-2"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
 
+[qa]
+[qa.deploy]
+[qa.deploy.parameters]
+stack_name = "boardgames-api-qa"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-z2zew3n5c75o"
+s3_prefix = "boardgames-api-qa"
+region = "eu-west-2"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
