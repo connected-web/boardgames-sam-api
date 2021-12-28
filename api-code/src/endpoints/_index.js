@@ -39,6 +39,7 @@ function findEndpointFiles ({ folder, fullpath }) {
 }
 
 function findEndpoints (basePath) {
+  console.time('Index: findEndpoints')
   const defaultGroup = {
     folder: 'default',
     fullpath: basePath
@@ -46,6 +47,7 @@ function findEndpoints (basePath) {
   const groups = [defaultGroup, ...findEndpointGroups(basePath)]
   const endpointTree = groups.map(findEndpointFiles).reduce((acc, item) => Object.assign(acc, item), {})
   const endpoints = flattenTree(endpointTree)
+  console.timeEnd('Index: findEndpoints')
   return endpoints
 }
 
