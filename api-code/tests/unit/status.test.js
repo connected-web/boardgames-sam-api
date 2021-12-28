@@ -2,6 +2,7 @@ const { expect } = require('chai')
 const logs = require('./helpers/logs')
 const app = require('../../app.js')
 const { modifyInterfaces, resetInterfaces } = require('../../src/helpers/interfaces')
+const packageJson = require('../../package.json')
 
 describe('Status Endpoint', () => {
   before(() => {
@@ -29,7 +30,7 @@ describe('Status Endpoint', () => {
       },
       body: JSON.stringify({
         name: 'boardgames',
-        version: '1.0.0',
+        version: packageJson.version,
         description: 'Boardgame Summary API',
         currentDate: '2021-12-05T19:19:23.335Z'
       })
