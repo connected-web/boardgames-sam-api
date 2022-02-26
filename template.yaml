@@ -18,6 +18,7 @@ Resources:
       CodeUri: api-code/
       Handler: app.default_status
       Runtime: nodejs14.x
+      Timeout: 10
       Policies: []
       Events:
         Summary:
@@ -31,6 +32,7 @@ Resources:
       CodeUri: api-code/
       Handler: app.playrecords_create
       Runtime: nodejs14.x
+      Timeout: 10
       Policies:
         - S3FullAccessPolicy:
             BucketName: boardgames-tracking
@@ -46,6 +48,7 @@ Resources:
       CodeUri: api-code/
       Handler: app.playrecords_delete
       Runtime: nodejs14.x
+      Timeout: 10
       Policies:
         - S3FullAccessPolicy:
             BucketName: boardgames-tracking
@@ -61,6 +64,7 @@ Resources:
       CodeUri: api-code/
       Handler: app.playrecords_list
       Runtime: nodejs14.x
+      Timeout: 10
       Policies:
         - S3FullAccessPolicy:
             BucketName: boardgames-tracking
@@ -76,6 +80,7 @@ Resources:
       CodeUri: api-code/
       Handler: app.users_list
       Runtime: nodejs14.x
+      Timeout: 10
       Policies:
         - S3FullAccessPolicy:
             BucketName: boardgames-tracking
