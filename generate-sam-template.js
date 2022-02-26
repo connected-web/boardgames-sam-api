@@ -16,6 +16,7 @@ function createResourceFunction(config) {
         CodeUri: codePath,
         Handler: `app.${handlerId}`,
         Runtime: runTime,
+        Timeout: 10,
         Policies: policies,
         Events: {
           Summary: {
