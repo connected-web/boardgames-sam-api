@@ -38,6 +38,7 @@ jobs:
           CURRENT_BRANCH: ${{ github.ref }}
         
       - name: Register Credentials
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -45,4 +46,5 @@ jobs:
           aws-region: us-west-1
 
       - name: SAM Deploy to QA
+        if: ${{ github.actor != 'dependabot[bot]' }}
         run: sam deploy --config-env qa --no-confirm-changeset --no-fail-on-empty-changeset 
