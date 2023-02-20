@@ -14,6 +14,10 @@ Globals:
       AllowHeaders: "'Content-Type,Calisaurus-User,Calisaurus-User-Api-Key'"
       AllowOrigin: "'*'"
 Resources:
+  BoardgamesApiTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: boardgames-api
 Outputs:
   BoardgamesSamApi:
     Description: "API Gateway endpoint URL for Prod stage of Boardgames SAM API"

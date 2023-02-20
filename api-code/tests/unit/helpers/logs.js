@@ -20,8 +20,13 @@ function get () {
   return logs
 }
 
+const real = {
+  log, info, warn, error
+}
+
 module.exports = {
   capture,
   reset,
-  get
+  get,
+  real
 }

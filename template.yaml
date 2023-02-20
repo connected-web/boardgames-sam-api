@@ -12,6 +12,10 @@ Globals:
       AllowHeaders: '''Content-Type,Calisaurus-User,Calisaurus-User-Api-Key'''
       AllowOrigin: '''*'''
 Resources:
+  BoardgamesApiTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: boardgames-api
   StatusFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -74,6 +78,48 @@ Resources:
           Properties:
             Path: /playrecords/list
             Method: GET
+  CreateUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.users_create
+      Runtime: nodejs14.x
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /users/create/{resourceId}
+            Method: PUT
+  DeleteUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.users_delete
+      Runtime: nodejs14.x
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /users/delete/{resourceId}
+            Method: POST
+  GetUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.users_get
+      Runtime: nodejs14.x
+      Policies:
+        - AmazonDynamoDBReadOnlyAccess
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /users/get/{resourceId}
+            Method: GET
   ListUsersFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -90,6 +136,20 @@ Resources:
           Properties:
             Path: /users/list
             Method: GET
+  PatchUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: api-code/
+      Handler: app.users_patch
+      Runtime: nodejs14.x
+      Policies:
+        - AmazonDynamoDBFullAccess
+      Events:
+        Summary:
+          Type: Api
+          Properties:
+            Path: /users/patch/{resourceId}
+            Method: PUT
 Outputs:
   BoardgamesSamApi:
     Description: API Gateway endpoint URL for Prod stage of Boardgames SAM API
@@ -119,9 +179,33 @@ Outputs:
   ListPlayRecordsFunctionIamRole:
     Description: Implicit IAM Role created for ListPlayRecords function
     Value: !GetAtt ListPlayRecordsFunctionRole.Arn
+  CreateUserFunction:
+    Description: CreateUser Lambda Function ARN
+    Value: !GetAtt CreateUserFunction.Arn
+  CreateUserFunctionIamRole:
+    Description: Implicit IAM Role created for CreateUser function
+    Value: !GetAtt CreateUserFunctionRole.Arn
+  DeleteUserFunction:
+    Description: DeleteUser Lambda Function ARN
+    Value: !GetAtt DeleteUserFunction.Arn
+  DeleteUserFunctionIamRole:
+    Description: Implicit IAM Role created for DeleteUser function
+    Value: !GetAtt DeleteUserFunctionRole.Arn
+  GetUserFunction:
+    Description: GetUser Lambda Function ARN
+    Value: !GetAtt GetUserFunction.Arn
+  GetUserFunctionIamRole:
+    Description: Implicit IAM Role created for GetUser function
+    Value: !GetAtt GetUserFunctionRole.Arn
   ListUsersFunction:
     Description: ListUsers Lambda Function ARN
     Value: !GetAtt ListUsersFunction.Arn
   ListUsersFunctionIamRole:
     Description: Implicit IAM Role created for ListUsers function
     Value: !GetAtt ListUsersFunctionRole.Arn
+  PatchUserFunction:
+    Description: PatchUser Lambda Function ARN
+    Value: !GetAtt PatchUserFunction.Arn
+  PatchUserFunctionIamRole:
+    Description: Implicit IAM Role created for PatchUser function
+    Value: !GetAtt PatchUserFunctionRole.Arn
